@@ -75,6 +75,9 @@ const Detail = () => {
         <button className="px-3 py-2 bg-red-500 rounded-md cursor-pointer border-none hover:bg-red-800 hover:text-gray-950 ">
           Block User
         </button>
+        <button className="px-3 py-2 bg-gray-700 rounded-md cursor-pointer border-none ">
+          Log Out
+        </button>
       </div>
     </div>
   );

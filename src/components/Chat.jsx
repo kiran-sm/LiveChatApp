@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import avatar from "../assets/images/avatar.png";
 import phone from "../assets/images/phone.png";
 import video from "../assets/images/video.png";
@@ -12,6 +12,10 @@ import EmojiPicker from "emoji-picker-react";
 const Chat = () => {
   const [emojiPick, setEmojiPick] = useState(false);
   const [text, setText] = useState("");
+  const endRef = useRef(null);
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
   const emojiHnadler = (e) => {
     setText((prev) => prev + e.emoji);
     setEmojiPick(false);
@@ -74,6 +78,7 @@ const Chat = () => {
             <span className="text-xs self-end "> 1 min ago</span>
           </div>
         </div>
+        <div ref={endRef}></div>
       </div>
 
       <div className="p-5 flex items-center gap-3 mt-auto justify-between border-t-[1px] border-[#11192880] ">

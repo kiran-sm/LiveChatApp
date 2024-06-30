@@ -3,6 +3,7 @@ import search from "../assets/images/search.png";
 import plus from "../assets/images/plus.png";
 import minus from "../assets/images/minus.png";
 import avatar from "../assets/images/avatar.png";
+import AddUser from "./AddUser";
 const ChatList = () => {
   const [addMode, setAddMode] = useState(false);
   return (
@@ -32,6 +33,7 @@ const ChatList = () => {
           </div>
         </div>
       </div>
+      {addMode && <AddUser />}
     </div>
   );
 };
