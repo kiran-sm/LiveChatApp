@@ -6,7 +6,7 @@ import Login from "./components/Login";
 import Notification from "./components/Notification";
 
 function App() {
-  const user = true;
+  const user = false;
   return (
     <div className="w-[90vw] h-[90vh] bg-[#111928bf] rounded-md backdrop-blur-sm backdrop-saturate-50 border-[1px] border-s-white flex">
       {!user ? (

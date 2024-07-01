@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import avatarImg from "../assets/images/avatar.png";
 import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../utils/firebase";
 
 const Login = () => {
   const [avatar, setAvatar] = useState({
@@ -19,6 +21,17 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // toast.error("Please Check mail and password");
+  };
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const { userName, email, password } = Object.fromEntries(formData);
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.log(err);
+      console.error(err.message);
+    }
   };
   return (
     <div className="w-[100%] h-[100%] flex items-center gap-24 ">
@@ -51,7 +64,10 @@ const Login = () => {
       <div className="h-[80%] w-[2px] bg-[#dddddd35] "></div>
       <div className="flex-1 flex flex-col items-center gap-5">
         <h2>Create an Account</h2>
-        <form className="flex flex-col items-center gap-5">
+        <form
+          className="flex flex-col items-center gap-5"
+          onSubmit={handleRegister}
+        >
           <label
             htmlFor="file"
             className="w-[100%] flex items-center cursor-pointer justify-between underline"
