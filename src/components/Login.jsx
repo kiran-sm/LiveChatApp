@@ -12,7 +12,8 @@ const Login = () => {
     file: null,
     url: "",
   });
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // const [loaderDisplay, setLoaderDisplay] = useState(false);
 
   const handleAvatar = (e) => {
     if (e.target.files[0]) {
@@ -24,7 +25,8 @@ const Login = () => {
   };
   const handleLogin = (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoaderDisplay(true);
+    // setLoading(true);
     // toast.error("Please Check mail and password");
   };
   const handleRegister = async (e) => {
@@ -51,9 +53,11 @@ const Login = () => {
       console.log(err);
       console.error(err.message);
       toast.warning(`${err}`);
-    } finally {
-      setLoading(false);
     }
+    // finally {
+    //   setLoaderDisplay(false);
+    //   setLoading(false);
+    // }
   };
   return (
     <div className="w-[100%] h-[100%] flex items-center gap-24 ">
@@ -133,7 +137,6 @@ const Login = () => {
           </button>
         </form>
       </div>
-      <div> {!loading ? <Loader /> : null}</div>
     </div>
   );
 };
