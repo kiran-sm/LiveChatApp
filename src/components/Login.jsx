@@ -3,12 +3,16 @@ import avatarImg from "../assets/images/avatar.png";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../utils/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import upload from "../utils/upload";
+import Loader from "./Loader";
 
 const Login = () => {
   const [avatar, setAvatar] = useState({
     file: null,
     url: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleAvatar = (e) => {
     if (e.target.files[0]) {
@@ -20,6 +24,7 @@ const Login = () => {
   };
   const handleLogin = (e) => {
     e.preventDefault();
+    setLoading(true);
     // toast.error("Please Check mail and password");
   };
   const handleRegister = async (e) => {
@@ -28,9 +33,26 @@ const Login = () => {
     const { userName, email, password } = Object.fromEntries(formData);
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      const imgUrl = await upload(avatar.file);
+
+      await setDoc(doc(db, "users", res.user.uid), {
+        userName,
+        email,
+        id: res.user.uid,
+        avatar: imgUrl,
+        blocked: [],
+      });
+      await setDoc(doc(db, "userChats", res.user.uid), {
+        chats: [],
+      });
+      toast.success("Account created, you can login Now");
     } catch (err) {
       console.log(err);
       console.error(err.message);
+      toast.warning(`${err}`);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -111,6 +133,7 @@ const Login = () => {
           </button>
         </form>
       </div>
+      <div> {!loading ? <Loader /> : null}</div>
     </div>
   );
 };
