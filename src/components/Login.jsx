@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import avatarImg from "../assets/images/avatar.png";
 import { toast } from "react-toastify";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth, db } from "../utils/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import upload from "../utils/upload";
@@ -23,8 +26,19 @@ const Login = () => {
       });
     }
   };
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
+    const { email, password } = Object.fromEntries(formData);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("login working");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    } finally {
+    }
+
     // setLoaderDisplay(true);
     // setLoading(true);
     // toast.error("Please Check mail and password");
